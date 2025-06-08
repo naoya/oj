@@ -14,6 +14,7 @@ from onlinejudge.service.atcoder import AtCoderProblem
 from onlinejudge.service.yukicoder import YukicoderProblem
 from onlinejudge.type import SampleParseError, TestCase
 from onlinejudge_command import format_utils, pretty_printers, utils
+from onlinejudge_command.atcoder_robust import wrap_atcoder_problem
 
 logger = getLogger(__name__)
 
@@ -85,6 +86,9 @@ def run(args: argparse.Namespace) -> bool:
             logger.warning('You specified a URL for a contest instead of a problem. If you want to download for all problems of a contest at once, please try to use `oj-prepare` command of https://github.com/online-judge-tools/template-generator')
         logger.error('The URL "%s" is not supported', args.url)
         return False
+    
+    # Wrap AtCoder problems with robust parsing
+    problem = wrap_atcoder_problem(problem)
     is_default_format = args.format is None and args.directory is None  # must be here since args.directory and args.format are overwritten
     if args.directory is None:
         args.directory = pathlib.Path('test')
