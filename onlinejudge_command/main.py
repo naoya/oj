@@ -7,6 +7,7 @@ from typing import *
 
 import onlinejudge.__about__ as api_version
 import onlinejudge_command.__0_workaround_for_conflict  # pylint: disable=unused-import
+import onlinejudge_command.atcoder_memory_limit_patch  # pylint: disable=unused-import
 import onlinejudge_command.__about__ as version
 import onlinejudge_command.subcommand.download as subcommand_download
 import onlinejudge_command.subcommand.generate_input as subcommand_generate_input
