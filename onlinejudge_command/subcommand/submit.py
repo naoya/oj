@@ -96,7 +96,12 @@ def run(args: argparse.Namespace) -> bool:
                 return False
 
         # guess or select language ids
-        language_dict: Dict[LanguageId, str] = {language.id: language.name for language in problem.get_available_languages(session=sess)}
+        try:
+            language_dict: Dict[LanguageId, str] = {language.id: language.name for language in problem.get_available_languages(session=sess)}
+        except Exception as e:
+            logger.exception('failed to get available languages: %s', e)
+            logger.error('This may be due to a parsing issue with the problem page. Please try again later or report this issue.')
+            return False
         matched_lang_ids: Optional[List[str]] = None
         if args.language in language_dict:
             matched_lang_ids = [args.language]
